@@ -1,0 +1,149 @@
+[hidden]{display:none!important}
+
+:root{
+	--brand:#004f75;
+	--accent:#0fc7da;
+	--accent-hover:#a2cfff;
+	--text:#1d2730;
+	--muted:#5d6b78;
+
+	/* Prioritaeten: Balkenfarbe / Zeilen-Tint / Schriftfarbe auf der Balkenfarbe */
+	--p1:#e4002b; --p1t:#e4002b; --p1x:#fff;
+	--p2:#a30d0d; --p2t:#f3cfcf; --p2x:#fff;
+	--p3:#d63a3a; --p3t:#fadcdc; --p3x:#fff;
+	--p4:#ee7f6d; --p4t:#fde6e1; --p4x:#3a0d08;
+	--p5:#f2a900; --p5t:#fff0cc; --p5x:#3b2a00;
+	--p6:#f0dc1e; --p6t:#fffbd1; --p6x:#3b3600;
+	--p7:#9ccc4a; --p7t:#eaf5d8; --p7x:#233300;
+	--p8:#23874a; --p8t:#d6efdf; --p8x:#fff;
+}
+
+*{box-sizing:border-box}
+body{margin:0;min-width:280px;font-family:Arial,Helvetica,sans-serif;color:var(--text);background:#fff}
+button,input{font:inherit}
+
+/* Kopfbereich */
+.header{background:var(--brand);color:#fff;padding:22px 40px 18px}
+.header-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.header h1{margin:0;font-size:24px}
+/* Titel + Arbeitsplatz (MAC): auf gleicher Grundlinie, MAC bewusst kleiner als der Titel */
+.title-group{display:flex;align-items:baseline;gap:12px;min-width:0}
+.title-sep{opacity:.45;font-size:20px}
+.workplace{font-size:13px;opacity:.85;white-space:nowrap}
+.workplace #macLabel{font-family:Consolas,monospace}
+.header-tools{display:flex;gap:8px}
+.tool-btn{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55);padding:6px 14px;font-size:14px;cursor:pointer;border-radius:3px}
+.tool-btn:hover{background:rgba(255,255,255,.15)}
+
+.add-row{display:flex}
+.add-row input{flex:1;min-width:0;border:none;border-radius:0;padding:10px;font-size:16px}
+.add-btn{background:var(--accent);color:#000;border:none;padding:10px 22px;font-size:16px;cursor:pointer;transition:.3s;border-radius:0}
+.add-btn:hover{background:var(--accent-hover)}
+
+.prio-row{display:flex;align-items:center;flex-wrap:wrap;gap:10px;margin-top:12px}
+.prio-label{font-size:14px;opacity:.85}
+
+/* Prioritaets-Auswahl (Kopf + Popover) */
+.prio-picker{display:flex;gap:6px}
+.prio-dot{width:28px;height:28px;border-radius:50%;border:2px solid transparent;cursor:pointer;font-size:12px;font-weight:bold;padding:0;line-height:1;
+	box-shadow:0 0 0 1px rgba(0,0,0,.25)}
+.prio-dot:hover{transform:scale(1.12)}
+.prio-dot[aria-checked="true"]{border-color:#fff;box-shadow:0 0 0 3px var(--text)}
+.prio-dot:focus-visible{outline:3px solid #fff;outline-offset:2px}
+
+.prio-dot.p1,.chip.p1{background:var(--p1);color:var(--p1x)}
+.prio-dot.p2,.chip.p2{background:var(--p2);color:var(--p2x)}
+.prio-dot.p3,.chip.p3{background:var(--p3);color:var(--p3x)}
+.prio-dot.p4,.chip.p4{background:var(--p4);color:var(--p4x)}
+.prio-dot.p5,.chip.p5{background:var(--p5);color:var(--p5x)}
+.prio-dot.p6,.chip.p6{background:var(--p6);color:var(--p6x)}
+.prio-dot.p7,.chip.p7{background:var(--p7);color:var(--p7x)}
+.prio-dot.p8,.chip.p8{background:var(--p8);color:var(--p8x)}
+
+.prio-popover{position:absolute;z-index:20;background:#fff;color:var(--text);padding:10px;border-radius:6px;box-shadow:0 6px 24px rgba(0,0,0,.3)}
+
+/* Listen */
+main{max-width:1100px;margin:0 auto}
+.list-section h2{margin:0;padding:10px 16px;font-size:14px;letter-spacing:.06em;text-transform:uppercase;background:#e8eef2;color:var(--muted)}
+.list-section.urgent h2{background:var(--p1);color:#fff}
+.list-section.urgent{border-bottom:4px solid var(--p1)}
+ul{margin:0;padding:0}
+.task{position:relative;display:flex;align-items:center;gap:12px;list-style-type:none;padding:12px 12px 12px 26px;font-size:18px;cursor:pointer;
+	-webkit-user-select:none;user-select:none;border-left:10px solid var(--bar);background:var(--tint);transition:filter .15s}
+.task:hover{filter:brightness(.95)}
+.task:focus-visible{outline:3px solid var(--brand);outline-offset:-3px}
+.task.p1{--bar:var(--p1);--tint:var(--p1t);color:var(--p1x);font-weight:bold}
+.task.p2{--bar:var(--p2);--tint:var(--p2t)}
+.task.p3{--bar:var(--p3);--tint:var(--p3t)}
+.task.p4{--bar:var(--p4);--tint:var(--p4t)}
+.task.p5{--bar:var(--p5);--tint:var(--p5t)}
+.task.p6{--bar:var(--p6);--tint:var(--p6t)}
+.task.p7{--bar:var(--p7);--tint:var(--p7t)}
+.task.p8{--bar:var(--p8);--tint:var(--p8t)}
+
+/* Signalrot: dezentes Pulsieren (nur solange offen, nicht bei reduzierter Bewegung) */
+@keyframes pulse{0%,100%{box-shadow:inset 0 0 0 0 rgba(255,255,255,0)}50%{box-shadow:inset 0 0 0 4px rgba(255,255,255,.55)}}
+.task.p1:not(.done){animation:pulse 1.6s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){.task.p1:not(.done){animation:none}}
+
+.task .body{flex:1;min-width:0}
+.task .title{overflow-wrap:anywhere}
+.task .meta{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:3px;font-size:13px;font-weight:normal;opacity:.85}
+.task .age{font-weight:bold}
+
+.chip{flex:none;border:none;border-radius:12px;padding:4px 12px;font-size:13px;font-weight:bold;cursor:pointer;white-space:nowrap;box-shadow:0 0 0 1px rgba(0,0,0,.2)}
+.chip:hover{filter:brightness(1.1)}
+.task.p1 .chip{background:#fff;color:var(--p1)}
+
+.del{flex:none;display:flex;align-items:center;justify-content:center;border:none;background:#ffdbdb;color:#c62828;padding:9px 12px;cursor:pointer;border-radius:3px}
+.del:hover{background:#f44336;color:#fff}
+.trash-icon{width:20px;height:20px;display:block}
+
+/* Erledigt: grau + durchgestrichen (wie in der urspruenglichen Version) */
+.task.done{--bar:#888;--tint:#888;color:#fff;font-weight:normal;animation:none}
+.task.done .title{text-decoration:line-through}
+.task.done .chip{background:rgba(255,255,255,.25);color:#fff;box-shadow:none}
+.task.done::before{content:'';position:absolute;border-color:#fff;border-style:solid;border-width:0 2px 2px 0;top:12px;left:9px;transform:rotate(45deg);height:15px;width:7px}
+
+.empty-hint{margin:0;padding:24px 16px;text-align:center;color:var(--muted)}
+
+/* Hinweis-Dialog */
+.modal{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.5);padding:16px}
+.modal-box{background:#fff;max-width:480px;width:100%;padding:22px 24px;border-radius:6px;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.modal-box h3{margin:0 0 10px}
+.modal-box p{margin:0 0 18px;line-height:1.5}
+.modal-actions{text-align:right}
+
+/* Info-Dialog (längerer Text -> scrollbar) */
+.icon-btn{display:flex;align-items:center;padding:6px 10px}
+.icon-btn svg{width:18px;height:18px;display:block}
+.info-box{max-width:620px;max-height:88vh;overflow-y:auto}
+.info-box h3{margin-bottom:14px}
+.info-box h4{margin:16px 0 4px;font-size:15px;color:var(--brand)}
+.info-box p,.info-box ul,.info-box ol{margin:0 0 8px;line-height:1.5}
+.info-box ul,.info-box ol{padding-left:22px}
+.info-box li{margin-bottom:3px}
+.info-box .modal-actions{margin-top:18px}
+.prio-row .icon-btn.small{padding:3px 6px}
+.prio-row .icon-btn.small svg{width:16px;height:16px}
+
+/* Prioritäten-Legende: Farbfeld (gleiche Klassen wie die Auswahl im Kopf) + Name/Beschreibung */
+.info-box ul.prio-legend{list-style:none;padding:0;margin:0 0 6px}
+.prio-legend li{display:flex;align-items:center;gap:12px;margin:0;padding:5px 0}
+.prio-legend .prio-dot{display:inline-flex;align-items:center;justify-content:center;flex:none;cursor:default}
+.prio-legend .prio-dot:hover{transform:none}
+.prio-legend li div{display:flex;flex-direction:column}
+.prio-legend li div span{font-size:13px;color:var(--muted)}
+.legend-note{margin-top:12px;font-size:13px;color:var(--muted)}
+
+@media (max-width:640px){
+	.header{padding:16px}
+	/* Schmales Display: MAC unter den Titel, Pipe entfällt */
+	.title-group{flex-direction:column;align-items:flex-start;gap:2px}
+	.title-sep{display:none}
+	.header-top{flex-wrap:wrap}
+	.header-tools{margin-left:auto}
+	.task{font-size:16px;flex-wrap:wrap}
+	.task .body{flex-basis:100%}
+	.prio-dot{width:26px;height:26px}
+}
